@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layout width="700" height="300">
+	<row>
+	  <key code="F1" text="F1"/>
+	  <key code="F2" text="F2"/>
+	  <key code="F3" text="F3"/>
+	  <key code="F4" text="F4"/>
+	  <key code="F5" text="F5"/>
+	  <key code="F6" text="F6"/>
+	  <key code="F7" text="F7"/>
+	  <key code="F8" text="F8"/>
+	  <key code="F9" text="F9"/>
+	  <key code="F10" text="F10"/>
+	  <key code="F11" text="F11"/>
+	  <key code="F12" text="F12"/>
+	</row>
+  
+	<row>
+	  <key code="TILDE" text="~"/>
+	  <key code="1" text="1" shcode="{!}" shtext="!"/>
+	  <key code="2" text="2" shcode="{@}" shtext="@"/>
+	  <key code="3" text="3" shcode="{#}" shtext="#"/>
+	  <key code="4" text="4" shcode="{$}" shtext="$"/>
+	  <key code="5" text="5" shcode="{%}" shtext="%"/>
+	  <key code="6" text="6" shcode="{^}" shtext="^"/>
+	  <key code="7" text="7" shcode="{&amp;}" shtext="&amp;"/>
+	  <key code="8" text="8" shcode="{*}" shtext="*"/>
+	  <key code="9" text="9" shcode="{(}" shtext="("/>
+	  <key code="0" text="0" shcode="{)}" shtext=")"/>
+	  <key code="BACKSPACE" text="Backspace"/>
+	  <key code="DEL" text="Del"/>
+	</row>
+
+	<row>
+	  <key code="TAB" text="Tab" weight="2"/>
+	  <key code="q" text="q"/>
+	  <key code="w" text="w"/>
+	  <key code="e" text="e"/>
+	  <key code="r" text="r"/>
+	  <key code="t" text="t"/>
+	  <key code="y" text="y"/>
+	  <key code="u" text="u"/>
+	  <key code="i" text="i"/>
+	  <key code="o" text="o"/>
+	  <key code="p" text="p"/>
+	</row>
+
+	<row>
+	  <key code="a" text="a"/>
+	  <key code="s" text="s"/>
+	  <key code="d" text="d"/>
+	  <key code="f" text="f"/>
+	  <key code="g" text="g"/>
+	  <key code="h" text="h"/>
+	  <key code="j" text="j"/>
+	  <key code="k" text="k"/>
+	  <key code="l" text="l"/>
+	  <key code="ENTER" text="Enter" weight="2"/>
+	</row>
+
+	<row>
+	  <key code="LSHIFT" text="shift" weight="2"/>
+	  <key code="z" text="z"/>
+	  <key code="x" text="x"/>
+	  <key code="c" text="c"/>
+	  <key code="v" text="v"/>
+	  <key code="b" text="b"/>
+	  <key code="n" text="n"/>
+	  <key code="m" text="m"/>
+	</row>
+	
+	<row>
+	  <key code="SPACE" text="Space" weight="4"/>
+	  <key code="LEFT" text="Left"/>
+	  <key code="UP" text="Up"/>
+	  <key code="RIGHT" text="Right"/>
+	  <key code="DOWN" text="Down"/>
+	</row>
+	  
+	<row>
+	  <key code="a" text="a" weight="1.5"/>
+	  <key code="LCTRL c" text="Copy"/>
+	  <key code="LCTRL v" text="Paste"/>
+	  <key code="VOLUP" text="VolUp"/>
+	</row>
+</layout>
