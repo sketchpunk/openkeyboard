@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:ok="clr-namespace:OpenKeyboard"
 		Topmost="True" Icon="icon.ico" WindowStyle="ToolWindow"
-        Title="OpenKeyboard" Height="50" Width="50" Background="#1e1e1e" Loaded="Window_Loaded" Activated="Window_Activated_1" Deactivated="Window_Deactivated_1" MouseDown="Window_MouseDown_1">
+        Title="OpenKeyboard" Height="50" Width="50" Background="#1e1e1e" Loaded="Window_Loaded" Activated="Window_Activated" Deactivated="Window_Deactivated" MouseDown="Window_MouseDown">
 	<Window.Resources>
 		<Style TargetType="{x:Type ok:vButton}">
 			<Setter Property="Background" Value="#2d2d30"/>
@@ -25,6 +25,7 @@
 			<Style.Triggers>
 				<Trigger Property="IsMouseOver" Value="true">
 					<Setter Property="Foreground" Value="Lime"/>
+					<Setter Property="Background" Value="#404045"/>
 				</Trigger>
 				<Trigger Property="IsPressed" Value="true">
 					<Setter Property="Background" Value="#007acc"/>
@@ -33,5 +34,5 @@
 		</Style>
 	</Window.Resources>
 
-    <Grid Name="mainContainer"></Grid>
+    <Grid Name="mainContainer" Margin="3"></Grid>
 </Window>
