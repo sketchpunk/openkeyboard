@@ -1,74 +1,71 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layout width="600" height="220">  
+<layout width="780" height="140" vpos="bottom" hpos="center">  
 	<row>
-	  <key code="TILDE" text="~"/>
-	  <key code="1" text="1" shcode="{!}" shtext="!"/>
-	  <key code="2" text="2" shcode="{@}" shtext="@"/>
-	  <key code="3" text="3" shcode="{#}" shtext="#"/>
-	  <key code="4" text="4" shcode="{$}" shtext="$"/>
-	  <key code="5" text="5" shcode="{%}" shtext="%"/>
-	  <key code="6" text="6" shcode="{^}" shtext="^"/>
-	  <key code="7" text="7" shcode="{&amp;}" shtext="&amp;"/>
-	  <key code="8" text="8" shcode="{*}" shtext="*"/>
-	  <key code="9" text="9" shcode="{(}" shtext="("/>
-	  <key code="0" text="0" shcode="{)}" shtext=")"/>
-	  <key code="BACKSPACE" text="Back"/>
-	  <key code="DEL" text="Del"/>
+		<key code="q" text="q"/>
+		<key code="w" text="w"/>
+		<key code="e" text="e"/>
+		<key code="r" text="r"/>
+		<key code="t" text="t"/>
+		<key code="y" text="y"/>
+		<key code="u" text="u"/>
+		<key code="i" text="i"/>
+		<key code="o" text="o"/>
+		<key code="p" text="p"/>
+		<key code="OEM4" text="[" shtext="{"/>
+		<key code="OEM6" text="]" shtext="}"/>
+		<key code="TAB" text="Tab" weight="1"/>
+		<key code="BACKSPACE" text="Back"/>
+		<key code="DEL" text="Del"/>
+		<key code="1" text="1" shcode="{!}" shtext="!"/>
+		<key code="2" text="2" shcode="{@}" shtext="@"/>
+		<key code="3" text="3" shcode="{#}" shtext="#"/>
+		<key code="CAPSLOCK" text="Caps"/>
+		<key code="LCTRL a" text="SelAll"/>
 	</row>
 
 	<row>
-	  <key code="TAB" text="Tab" weight="2"/>
-	  <key code="q" text="q"/>
-	  <key code="w" text="w"/>
-	  <key code="e" text="e"/>
-	  <key code="r" text="r"/>
-	  <key code="t" text="t"/>
-	  <key code="y" text="y"/>
-	  <key code="u" text="u"/>
-	  <key code="i" text="i"/>
-	  <key code="o" text="o"/>
-	  <key code="p" text="p"/>
-	  <key code="OEM4" text="[" shtext="{"/>
-	  <key code="OEM6" text="]" shtext="}"/>
-	  <key code="OEM5" text="\" shtext="|"/>
+		<key code="a" text="a"/>
+		<key code="s" text="s"/>
+		<key code="d" text="d"/>
+		<key code="f" text="f"/>
+		<key code="g" text="g"/>
+		<key code="h" text="h"/>
+		<key code="j" text="j"/>
+		<key code="k" text="k"/>
+		<key code="l" text="l"/>
+		<key code="OEM1" text=";" shtext=":"/>
+		<key code="OEM7" text="'" shtext="&quot;"/>
+		<key string="-" text="-" shstring="_" shtext="_"/>
+		<key code="ENTER" text="Enter" weight="1"/>
+		<key code="UP" text="Up"/>
+		<key code="DOWN" text="Down"/>
+		<key code="4" text="4" shcode="{$}" shtext="$"/>
+		<key code="5" text="5" shcode="{%}" shtext="%"/>
+		<key code="6" text="6" shcode="{^}" shtext="^"/>
+		<key code="LSHIFT" text="Shift" weight="1"/>
+		<key code="LCTRL c" text="Copy" shcode="LCTRL x" shtext="Cut"/>
 	</row>
 
 	<row>
-	  <key code="CAPSLOCK" text="Caps"/>
-	  <key code="a" text="a"/>
-	  <key code="s" text="s"/>
-	  <key code="d" text="d"/>
-	  <key code="f" text="f"/>
-	  <key code="g" text="g"/>
-	  <key code="h" text="h"/>
-	  <key code="j" text="j"/>
-	  <key code="k" text="k"/>
-	  <key code="l" text="l"/>
-	  <key code="OEM1" text=";" shtext=":"/>
-	  <key code="OEM7" text="'" shtext="&quot;"/>
-	  <key code="ENTER" text="Enter" weight="1.5"/>
-	</row>
-
-	<row>
-	  <key code="LSHIFT" text="Shift" weight="1"/>
-	  <key code="z" text="z"/>
-	  <key code="x" text="x"/>
-	  <key code="c" text="c"/>
-	  <key code="v" text="v"/>
-	  <key code="b" text="b"/>
-	  <key code="n" text="n"/>
-	  <key code="m" text="m"/>
-	  <key code="COMMA" text="," shcode="{&lt;}" shtext="&lt;"/>
-	  <key code="PERIOD" text="." shcode="{&gt;}" shtext="&gt;"/>
-	  <key code="OEM2" text="/" shtext="?"/>
-	  <key code="RSHIFT" text="Shift" weight="1"/>
-	</row>
-	
-	<row>
-	  <key code="UP" text="Up"/>
-	  <key code="DOWN" text="Down"/>
-	  <key code="SPACE" text="Space" weight="4"/>
-	  <key code="LEFT" text="Left"/>
-	  <key code="RIGHT" text="Right"/>
+		<key code="z" text="z"/>
+		<key code="x" text="x"/>
+		<key code="c" text="c"/>
+		<key code="v" text="v"/>
+		<key code="b" text="b"/>
+		<key code="n" text="n"/>
+		<key code="m" text="m"/>
+		<key code="COMMA" text="," shcode="{&lt;}" shtext="&lt;"/>
+		<key code="PERIOD" text="." shcode="{&gt;}" shtext="&gt;"/>
+		<key code="OEM2" text="/" shtext="?"/>
+		<key code="OEM5" text="\" shtext="|"/>
+		<key string="=" text="=" shstring="+" shtext="+"/>
+		<key code="SPACE" text="Space" weight="1"/>
+		<key code="LEFT" text="Left"/>
+		<key code="RIGHT" text="Right"/>
+		<key code="7" text="7" shcode="{&amp;}" shtext="&amp;"/>
+		<key code="8" text="8" shcode="{*}" shtext="*"/>
+		<key code="9" text="9" shcode="{(}" shtext="("/>
+		<key code="0" text="0" shcode="{)}" shtext=")"/>
+		<key code="LCTRL v" text="Paste"/>
 	</row>
 </layout>

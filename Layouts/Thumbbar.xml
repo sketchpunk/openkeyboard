@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layout width="110" height="250">
+<layout width="110" height="250" vpos="center" hpos="right">
+	<row><key code="PGUP" text="PageU"/><key code="PGDOWN" text="PageD"/></row>
 	<row><key code="k" text="k"/><key code="j" text="j"/></row>
 	<row><key code="o" text="o"/><key code="m" text="m"/></row>
 	<row><key code="LCTRL a" text="SelAll"/><key code="LCTRL c" text="Copy"/></row>
 	<row><key code="LCTRL x" text="Cut"/><key code="LCTRL v" text="Paste"/></row>
-	<row><key code="PGUP" text="PageU"/><key code="PGDOWN" text="PageD"/></row>
-	<!--<row><key string="http://" text="Http"/></row>-->
+	<row><key code="ENTER" text="Enter"/></row>
 </layout>
