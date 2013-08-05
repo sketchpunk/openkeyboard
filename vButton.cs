@@ -12,6 +12,7 @@ namespace OpenKeyboard{
 		public string[] KBKeys = null;
 		public string[] KBShKeys = null;
 		public string SendString = "";
+		public string shSendString = "";
 
 		// Dependency Property
 		public static DependencyProperty ShiftTextProperty = DependencyProperty.Register("ShiftText", typeof(string), typeof(TextBlock), new FrameworkPropertyMetadata(""));

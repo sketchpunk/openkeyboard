@@ -24,11 +24,27 @@ namespace OpenKeyboard{
 			xml.Load(RootPath("Layouts\\" + fName));
 
 			XmlElement root = xml.DocumentElement;
-
 			if(root.ChildNodes.Count == 0) return;
 
+			//..........................................
+			//Set window size and position
+			double sHeight = SystemParameters.WorkArea.Height;
+            double sWidth = SystemParameters.WorkArea.Width;
+			
 			uiWindow.Width = double.Parse(root.GetAttribute("width"));
 			uiWindow.Height = double.Parse(root.GetAttribute("height"));
+
+			switch(root.GetAttribute("vpos")){
+				case "top": uiWindow.Top = 20; break;
+				case "center": uiWindow.Top = (sHeight - uiWindow.Height) / 2; break;
+				case "bottom": uiWindow.Top = sHeight - uiWindow.Height - 20; break;
+			}//switch
+
+			switch(root.GetAttribute("hpos")){
+				case "left": uiWindow.Left = 20; break;
+				case "center": uiWindow.Left = (sWidth - uiWindow.Width) / 2; break;
+				case "right": uiWindow.Left = sWidth - uiWindow.Width - 20; break;
+			}//switch
 
 			//..........................................
 			//Reset UI Grid
@@ -89,6 +105,7 @@ namespace OpenKeyboard{
 
 			btn.Content = title;
 			btn.SendString = elm.GetAttribute("string");
+			btn.shSendString = elm.GetAttribute("shstring");
 			btn.Click += vKeyboard.OnKeyPress;
 			return btn;
 		}//func

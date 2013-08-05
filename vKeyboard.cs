@@ -93,6 +93,13 @@ namespace OpenKeyboard{
 			vButton btn = (vButton)sender;
 			List<int> aryLast = new List<int>();
 
+			//if shift and shSendString exists, then send that instead.
+			if(isShiftActive && !String.IsNullOrEmpty(btn.shSendString)){
+				System.Windows.Forms.SendKeys.SendWait(btn.SendString);
+				isShiftActive = false;
+				return;
+			}//if
+
 			//if SendString exists, then send that instead.
 			if(!String.IsNullOrEmpty(btn.SendString)){
 				System.Windows.Forms.SendKeys.SendWait(btn.SendString);
