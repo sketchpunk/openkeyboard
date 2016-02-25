@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Timers;
 
 namespace OpenKeyboard{
 	public abstract class vLayout{
@@ -126,7 +126,12 @@ namespace OpenKeyboard{
 
                     btn.KBCommand.SendString = elm.GetAttribute("string");
                     btn.KBCommand.shSendString = elm.GetAttribute("shstring");
-                    btn.Click += OnButtonPress;
+
+                    btn.PreviewMouseLeftButtonDown += BtnTouch_Down;
+                    btn.PreviewMouseLeftButtonUp += BtnTouch_Up;
+                    btn.PreviewTouchDown += BtnTouch_Down;
+                    btn.PreviewTouchUp += BtnTouch_Up;
+
                     break;
                 //.........................................
                 case "menu":
@@ -155,8 +160,11 @@ namespace OpenKeyboard{
 			return btn;
 		}//func
 
+        //public static void OnButtonPress(Object sender, RoutedEventArgs e) { vKeyboard.ProcessCommand((sender as vButton).KBCommand); }//func
+        private static void BtnTouch_Down(Object sender, EventArgs e) { KeyLoopHandler.BeginKeypress((sender as vButton).KBCommand); }//func
+        private static void BtnTouch_Up(Object sender, EventArgs e) { KeyLoopHandler.EndKeypress(); }//func
+
         public static void OnMenuClick(object sender, RoutedEventArgs e) { vKeyboard.ProcessCommand((KeyboardCommand)(sender as MenuItem).Tag); }
-        public static void OnButtonPress(Object sender, RoutedEventArgs e) { vKeyboard.ProcessCommand((sender as vButton).KBCommand); }//func
         public static void OnMenuButtonPress(Object sender, RoutedEventArgs e) { (sender as vButton).ContextMenu.IsOpen = true; }//func
 
         private static string RootPath(string relativePath){

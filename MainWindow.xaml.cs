@@ -30,17 +30,26 @@ namespace OpenKeyboard{
 
                 CreateContextMenu();
                 LoadLayoutList();
+
+                this.MouseLeftButtonDown += MainWindow_LeftButtonDown;
             }//func
 
-            protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e){
-                base.OnMouseLeftButtonDown(e);
+            private void MainWindow_LeftButtonDown(object sender, MouseButtonEventArgs e) {
                 this.DragMove(); //Allow user to drag window around when they right click anywhere in the window.
+                e.Handled = true;
             }//func
-
+            
             protected override void OnMouseRightButtonDown(MouseButtonEventArgs e) {
                 base.OnMouseRightButtonDown(e);
                 mAppMenu.IsOpen = true; //Show context menu if user right clicks anywhere in the window.
             }//func
+
+            /*
+            protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e){
+                base.OnMouseLeftButtonDown(e);
+                this.DragMove(); //Allow user to drag window around when they right click anywhere in the window.
+            }//func
+            */
 
             //private void Window_Activated(object sender, EventArgs e){}
             //private void Window_MouseDown(object sender, MouseButtonEventArgs e) { }//func
@@ -48,7 +57,7 @@ namespace OpenKeyboard{
         #endregion
 
         #region Menu Events
-            private void OpacityMenu_Click(object sender, RoutedEventArgs e) {
+        private void OpacityMenu_Click(object sender, RoutedEventArgs e) {
                 double tag = double.Parse((sender as MenuItem).Tag.ToString());
                 this.Opacity = (tag / 100);
             }//func
@@ -73,7 +82,6 @@ namespace OpenKeyboard{
                 mItem.Click += MenuItem_Click;
                 mAppMenu.Items.Add(mItem);
                 mAppMenu.Items.Add(new Separator());
-
 
                 MenuItem itm;
                 mItem = new MenuItem() { Header = "Opacity" };
