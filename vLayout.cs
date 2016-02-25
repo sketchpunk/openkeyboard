@@ -21,7 +21,7 @@ namespace OpenKeyboard{
 			//..........................................
 			//Load up Layout XML
 			XmlDocument xml = new XmlDocument();
-			xml.Load(RootPath("Layouts\\" + fName));
+			xml.Load(RootPath("Layouts\\" + fName + ".xml"));
 
 			XmlElement root = xml.DocumentElement;
 			if(root.ChildNodes.Count == 0) return;
@@ -118,7 +118,11 @@ namespace OpenKeyboard{
 		}//func
 	
 		public static string[] GetLayoutList(){
-			return System.IO.Directory.GetFiles(RootPath("Layouts"),"*.xml");
+            string [] rtn = System.IO.Directory.GetFiles(RootPath("Layouts"), "*.xml");
+
+            for(int i=0; i < rtn.Length; i++) rtn[i] = System.IO.Path.GetFileNameWithoutExtension(rtn[i]);
+
+            return rtn; 
 		}//func
 	}//cls
 }//ns

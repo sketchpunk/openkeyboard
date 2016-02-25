@@ -67,6 +67,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="vButton.cs" />
+    <Compile Include="vJumpList.cs" />
     <Compile Include="vLayout.cs" />
     <Compile Include="vWindow.cs" />
     <Compile Include="vKeyboard.cs" />

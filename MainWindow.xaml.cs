@@ -1,132 +1,112 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Shell;
 using System.Reflection;
-
 using System.Windows.Interop;
-using System.Runtime.InteropServices;
 
-
-//Helpful sites
+#region Notes
 //http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx
 //http://elegantcode.com/2011/03/02/wpf-advanced-jump-lists-using-a-single-instance-application/
+#endregion
 
 namespace OpenKeyboard{
 
 	public partial class MainWindow : Window{
-		private WindowInteropHelper wih = null;
-		private int focusStyle = 0;
-		private int unfocusStyle = 0;
-		private Dictionary<int,string> kbLayouts = new Dictionary<int,string>();
-		
+        private WindowController mWinController = null;
+        private ContextMenu mAppMenu = new ContextMenu();
+
 		public MainWindow(){ InitializeComponent(); }
 
-		#region Create JumpList
-			private void CreateKBList(){
-				string[] ary = vLayout.GetLayoutList();
-				if(ary.Length == 0) return;
-
-				//................................................
-				//Window Context Menu
-				IntPtr hMenu = vWindow.GetSystemMenu(this.wih.Handle, false);
-				
-				//Win8 Window Jumplist
-				JumpList jumpList = new JumpList();
-				JumpList.SetJumpList(Application.Current, jumpList);
-
-				//................................................
-				//Loop through file
-				int i;
-				string kbName = "",fileName = "", asmPath = Assembly.GetEntryAssembly().Location;
-				
-				for(i=0; i < ary.Length; i++){
-					//Save command handler id for menu and path for later system messaging listening
-					fileName = System.IO.Path.GetFileName(ary[i]);
-					kbName = System.IO.Path.GetFileNameWithoutExtension(ary[i]);
-					this.kbLayouts.Add(1000+i+1,fileName);
-
-					//Create items in context menu
-					vWindow.InsertMenu(hMenu, i, vWindow.MF_BYPOSITION, 1000+i+1, kbName);
-
-					//Create jumplist item
-					JumpTask jTask = new JumpTask();
-					jTask.Title = kbName;
-					jTask.Description = "Load this Keyboard Layout";
-					jTask.ApplicationPath = asmPath;
-					jTask.Arguments = fileName;
-					jumpList.JumpItems.Add(jTask);
-				}//for
-
-				//................................................
-				//Create Seperator
-				vWindow.InsertMenu(hMenu,i,vWindow.MF_SEPARATOR | vWindow.MF_BYPOSITION,1000+i+1,null);
-
-				//Apply Jump Items
-				jumpList.Apply();
-			}//for
-		#endregion
-
-		#region Window Events
-			private void Window_Activated(object sender, EventArgs e){}
-			private void Window_MouseDown(object sender, MouseButtonEventArgs e){}//func
-
+        #region Window Events
 			private void Window_Loaded(object sender, RoutedEventArgs e){
-				//Setup focus styles
-				this.wih = new WindowInteropHelper(this);
-				this.focusStyle = vWindow.GetWindowLong(this.wih.Handle,vWindow.GWL_EXSTYLE);
-				this.unfocusStyle = this.focusStyle | vWindow.WS_EX_NOACTIVATE;
+                mWinController = new WindowController(this);
+                mWinController.DisableFocus(); //When window loses focus, prevent windows from getting focus back automaticly when clicking anything
 
 				//Check which keyboard profile to load in.
 				string[] args = Environment.GetCommandLineArgs();
 				if(args.Length > 1) vLayout.Load(args[1],mainContainer,this);
-				else vLayout.Load("Default.xml",mainContainer,this);
-			
-				CreateKBList();
-			}//func
+				else vLayout.Load("Default",mainContainer,this);
 
-			private void Window_Deactivated(object sender, EventArgs e){
-				//When window loses focus, prevent windows from getting focus back automaticly when clicking anything
-				vWindow.SetWindowLong(this.wih.Handle, vWindow.GWL_EXSTYLE, this.unfocusStyle);
-			}//func
-		#endregion
-	 
-		#region Window Messaging
-			/*GET Messages, Setup intercept from OS to control the focus of the window*/
-			protected override void OnSourceInitialized(EventArgs e){
-				base.OnSourceInitialized(e);
-				HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
-				source.AddHook(WndProc);
-			}//func
+                CreateContextMenu();
+                LoadLayoutList();
+            }//func
 
-			private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled){
-				switch(msg){
-					//............................................................
-					case vWindow.WM_NCLBUTTONDOWN:
-						if(wParam.ToInt64() == vWindow.HT_CAPTION){ //only set focus if clicking on the title bar.
-							vWindow.SetWindowLong(this.wih.Handle, vWindow.GWL_EXSTYLE, this.focusStyle);
-							this.Activate();
-						}//if
-					break;
-					
-					//............................................................
-					case vWindow.WM_SYSCOMMAND:
-						int wparam = wParam.ToInt32();
-						if(this.kbLayouts.ContainsKey(wparam)) vLayout.Load(this.kbLayouts[wparam],mainContainer,this);
-					break;
-				}//switch
-				return IntPtr.Zero;
-			}//func
-		#endregion
+            protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e){
+                base.OnMouseLeftButtonDown(e);
+                this.DragMove(); //Allow user to drag window around when they right click anywhere in the window.
+            }//func
+
+            protected override void OnMouseRightButtonDown(MouseButtonEventArgs e) {
+                base.OnMouseRightButtonDown(e);
+                mAppMenu.IsOpen = true; //Show context menu if user right clicks anywhere in the window.
+            }//func
+
+            //private void Window_Activated(object sender, EventArgs e){}
+            //private void Window_MouseDown(object sender, MouseButtonEventArgs e) { }//func
+            //private void Window_Deactivated(object sender, EventArgs e){}//func
+        #endregion
+
+        #region Menu Events
+        private void OpacityMenu_Click(object sender, RoutedEventArgs e) {
+                double tag = double.Parse((sender as MenuItem).Tag.ToString());
+                this.Opacity = (tag / 100);
+            }//func
+
+            private void MenuItem_Click(object sender, RoutedEventArgs e) {
+                string tag = (sender as MenuItem).Tag.ToString();
+
+                switch(tag) {
+                    case "{CMD_EXIT}": this.Close(); return;
+                    default:
+                        vLayout.Load(tag, mainContainer, this);
+                        break;
+                }//switch
+            }//func
+        #endregion
+
+        #region Loaders
+            private void CreateContextMenu() {
+                mAppMenu.PlacementTarget = this;
+
+                MenuItem mItem = new MenuItem() { Header = "Exit", Tag = "{CMD_EXIT}" };
+                mItem.Click += MenuItem_Click;
+                mAppMenu.Items.Add(mItem);
+                mAppMenu.Items.Add(new Separator());
+
+
+                MenuItem itm;
+                mItem = new MenuItem() { Header = "Opacity" };
+                for(int i = 100; i >= 20; i -= 10){
+                    itm = new MenuItem() { Header = i.ToString() + "%", Tag = i.ToString() };
+                    itm.Click += OpacityMenu_Click;
+                    mItem.Items.Add(itm);
+                }//for
+
+                mAppMenu.Items.Add(mItem);
+                mAppMenu.Items.Add(new Separator());
+            }//func
+
+            private void LoadLayoutList() {
+                string[] ary = vLayout.GetLayoutList();
+                if(ary.Length == 0) return;
+
+                int i;
+                MenuItem mItem;
+                var jumpList = new vJumpList() { CategoryName = "Available Layouts", AppPath = Assembly.GetEntryAssembly().Location };
+
+                for(i = 0; i < ary.Length; i++) {
+                    //Add Item to context menu
+                    mItem = new MenuItem() { Header = ary[i], Tag = ary[i] };
+                    mItem.Click += MenuItem_Click;
+                    mAppMenu.Items.Add(mItem);
+
+                    //Create JumpList Item
+                    jumpList.AddTask(ary[i], "Load this Keyboard Layout", ary[i]);
+                }//for
+
+                jumpList.Apply();
+            }//for
+        #endregion
 	}//cls
 }//ns

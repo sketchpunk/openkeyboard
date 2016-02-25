@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:ok="clr-namespace:OpenKeyboard"
-		Topmost="True" Icon="icon.ico" WindowStyle="ToolWindow" Opacity="0"
-        Title="OpenKeyboard" Height="50" Width="50" Top="-1000" Left="-1000" Background="#1e1e1e" Loaded="Window_Loaded" Activated="Window_Activated" Deactivated="Window_Deactivated" MouseDown="Window_MouseDown">
+		Topmost="True" Icon="icon.ico" WindowStyle="none" Opacity="1" AllowsTransparency="true" ResizeMode="CanResizeWithGrip"
+        Title="OpenKeyboard" Height="50" Width="50" Top="-1000" Left="-1000" Background="#1e1e1e" Loaded="Window_Loaded">
 	<Window.Resources>
 		<Style TargetType="{x:Type ok:vButton}">
 			<Setter Property="Background" Value="#2d2d30"/>
@@ -32,13 +32,21 @@
 				</Trigger>
 			</Style.Triggers>
 		</Style>
-	</Window.Resources>
+
+        <!--
+        <Style TargetType="{x:Type ContextMenu}">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
+        </Style>-->
+    </Window.Resources>
 	
 	<Window.Triggers>
+        <!--
 		<EventTrigger RoutedEvent="Window.Loaded"><BeginStoryboard>
             <Storyboard><DoubleAnimation Duration="00:00:01" Storyboard.TargetProperty="Opacity" To="1" /></Storyboard>
-		</BeginStoryboard></EventTrigger>
+		</BeginStoryboard></EventTrigger>-->
 	</Window.Triggers>
 
-    <Grid Name="mainContainer" Margin="3"></Grid>
+    <Grid Name="mainContainer" Margin="6,25,6,6"></Grid>
 </Window>
