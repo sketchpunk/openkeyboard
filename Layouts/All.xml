@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layout width="700" height="300">
+<layout width="700" height="300" margin="6,20,6,6">
 	<row>
 	  <key code="F1" text="F1"/>
 	  <key code="F2" text="F2"/>

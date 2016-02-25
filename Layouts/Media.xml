@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layout width="600" height="50" vpos="bottom" hpos="center" margin="30,6,6,6">
+  <row>
+    <key code="MEDIAPAUSE" text="Play/Pause"/>
+    <key code="PREVRACK" text="Prev"/>
+    <key code="NEXTRACK" text="Next"/>
+    <key code="VOLUP" text="Vol Up"/>
+    <key code="VOLDOWN" text="Vol Down"/>
+    <key code="MUTE" text="Mute" weight="0.5"/>
+  </row>
+</layout>

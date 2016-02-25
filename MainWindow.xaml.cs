@@ -26,7 +26,7 @@ namespace OpenKeyboard{
 				//Check which keyboard profile to load in.
 				string[] args = Environment.GetCommandLineArgs();
 				if(args.Length > 1) vLayout.Load(args[1],mainContainer,this);
-				else vLayout.Load("Media",mainContainer,this);
+				else vLayout.Load("Blender",mainContainer,this);
 
                 CreateContextMenu();
                 LoadLayoutList();

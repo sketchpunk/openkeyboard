@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layout width="150" height="250" vpos="center" hpos="right" margin="6,20,6,6">
+  
+  <row>
+    <key code="DECIMAL" text="P"/>
+    <key code="NUM7" text="x"/>
+    <key code="NUM0" text="C"/>
+  </row>
+
+  <row>
+    <key code="LCTRL NUM3" text="x"/>
+    <key code="NUM1" text="x"/>
+    <key code="NUM3" text="x"/>
+  </row>
+  
+  <row>
+    <key code="t" text="T"/>
+    <key code="LCTRL NUM7" text="x"/>
+    <key code="n" text="N"/>
+  </row>
+    
+  <row>
+    <key code="TAB" text="Modes"/>
+    <key code="z" text="Wire"/>
+    <key code="LSHIFT c" text="Center"/>
+  </row>
+  
+  <row>
+    <menu text="Grab">
+      <key code="g z" text="Grab Z"/>
+      <key code="g x" text="Grab X"/>
+      <key code="g y" text="Grab Y"/>
+    </menu>
+    <menu text="Scale">
+      <key code="s z" text="Scale Z"/>
+      <key code="s x" text="Scale X"/>
+      <key code="s y" text="Scale Y"/>
+      <key code="s SHIFT z" text="Scale XY"/>
+    </menu>
+    <menu text="Rotate">
+      <key code="r z" text="Rotate Z"/>
+      <key code="r x" text="Rotate X"/>
+      <key code="r y" text="Rotate Y"/>
+    </menu>
+  </row>
+
+  <row>
+    <menu text="Misc">
+      <key code="LCTRL b" text="Bevel"/>
+      <key code="i" text="Inset"/>
+      <key code="LSHIFT d" text="Duplicate"/>
+      <key code="p" text="Seperate Selection"/>
+      <key code="h" text="Hide Selected"/>
+      <key code="LALT h" text="Unhide All"/>
+      <key code="LSHIFT h" text="Hide Unselected"/>
+      <key code="LCTRL r" text="Loop Cut"/>
+      <key code="k" text="Knife Cut"/>
+    </menu>
+  </row>
+
+</layout>

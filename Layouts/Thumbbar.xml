@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layout width="110" height="250" vpos="center" hpos="right">
+<layout width="110" height="250" vpos="center" hpos="right" margin="6,20,6,6">
 	<row><key code="PGUP" text="PageU"/><key code="PGDOWN" text="PageD"/></row>
 	<row><key code="k" text="k"/><key code="j" text="j"/></row>
 	<row><key code="o" text="o"/><key code="m" text="m"/></row>

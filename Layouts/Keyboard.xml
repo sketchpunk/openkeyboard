@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layout width="600" height="220" vpos="bottom" hpos="center">  
+<layout width="600" height="220" vpos="bottom" hpos="center" margin="6,20,6,6">  
 	<row>
 	  <key code="TILDE" text="~"/>
 	  <key code="1" text="1" shcode="{!}" shtext="!"/>
