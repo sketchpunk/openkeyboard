@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Timers;
 
 namespace OpenKeyboard{
 	public abstract class vLayout{
-		public static void Load(string fName,Grid uiGrid,Window uiWindow){
+        public static FontFamily mIconFont = new FontFamily(new Uri("pack://application:,,,/fonts/#FontAwesome"), "./#FontAwesome");
+
+        public static void Load(string fName,Grid uiGrid,Window uiWindow){
 			//..........................................
 			//Load up Layout XML
 			XmlDocument xml = new XmlDocument();
@@ -104,14 +95,16 @@ namespace OpenKeyboard{
 		}//func
 
 		private static vButton CreateButton(XmlElement elm,int col){
-			string title = elm.GetAttribute("text");
-            string code, shCode, shText;
-
+            string code, shCode, shText
+                ,title = elm.GetAttribute("text")
+                ,fsize = elm.GetAttribute("fsize");
+           
             vButton btn = new vButton(){};
-			Grid.SetRow(btn,0);
+            Grid.SetRow(btn,0);
 			Grid.SetColumn(btn,col);
-
-            btn.Content = title;
+            btn.FontFamily = mIconFont;
+            btn.Title = title;
+            if(!String.IsNullOrEmpty(fsize)) btn.FontSize = double.Parse(fsize);
 
             switch(elm.Name){
                 //.........................................

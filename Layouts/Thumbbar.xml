@@ -1,9 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layout width="110" height="250" vpos="center" hpos="right" margin="6,20,6,6">
-	<row><key code="PGUP" text="PageU"/><key code="PGDOWN" text="PageD"/></row>
-	<row><key code="k" text="k"/><key code="j" text="j"/></row>
-	<row><key code="o" text="o"/><key code="m" text="m"/></row>
-	<row><key code="LCTRL a" text="SelAll"/><key code="LCTRL c" text="Copy"/></row>
-	<row><key code="LCTRL x" text="Cut"/><key code="LCTRL v" text="Paste"/></row>
+<layout width="60" height="420" vpos="center" hpos="right" margin="6,20,6,6">
+  <row>
+    <key code="PGUP" text="\uf102" fsize="20"/>
+  </row>
+  <row>
+    <key code="PGDOWN" text="\uf103" fsize="20"/>
+  </row>
+
+  <row>
+    <key code="j" text="\uf064" fsize="16"/>
+  </row>
+  <row>
+    <key code="k" text="\uf112" fsize="16"/>
+  </row>
+
+  <row>
+    <key code="m" text="\uf00c" fsize="16"/>
+  </row>
+  <row><key code="o" text="\uf141" fsize="16"/></row>
+
+  <row><key code="DEL" text="Delete"/></row>
 	<row><key code="ENTER" text="Enter"/></row>
+  
+  <row>
+    <menu text="\uf078" fsize="16">
+      <key code="LCTRL c" text="Copy"/>
+      <key code="LCTRL x" text="Cut"/>
+      <key code="LCTRL v" text="Paste"/>
+      <key code="LCTRL a" text="SelAll"/>
+    </menu>
+  </row>
 </layout>

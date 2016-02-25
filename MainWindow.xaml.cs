@@ -8,6 +8,8 @@ using System.Windows.Interop;
 #region Notes
 //http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx
 //http://elegantcode.com/2011/03/02/wpf-advanced-jump-lists-using-a-single-instance-application/
+
+//http://fortawesome.github.io/Font-Awesome/cheatsheet/
 #endregion
 
 namespace OpenKeyboard{
@@ -25,8 +27,8 @@ namespace OpenKeyboard{
 
 				//Check which keyboard profile to load in.
 				string[] args = Environment.GetCommandLineArgs();
-				if(args.Length > 1) vLayout.Load(args[1],mainContainer,this);
-				else vLayout.Load("Blender",mainContainer,this);
+				if(args.Length > 1) { vLayout.Load(args[1],mainContainer,this); }
+				else vLayout.Load("Thumbbar",mainContainer,this);
 
                 CreateContextMenu();
                 LoadLayoutList();

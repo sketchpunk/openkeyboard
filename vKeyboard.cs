@@ -34,10 +34,6 @@ namespace OpenKeyboard {
             ,{"PGUP",new KeyItem(0x21,true)}    ,{"PGDOWN",new KeyItem(0x22,true)}
             ,{"HOME",new KeyItem(0x24,true)}    ,{"END",new KeyItem(0x23,true)}
             ,{"LWIN",new KeyItem(0x5B,true)}    ,{"RWIN",new KeyItem(0x5C,true)}
-            
-			//LWIN - 0x5B, RWIN 0x5C
-			//NUMPAD0 - 0x60, NUMPAD1 - 0x61, NUMPAD2 - 0x62, NUMPAD3 - 0x63, NUMPAD4 - 0x64, NUMPAD5 - 0x65, NUMPAD6 - 0x66, NUMPAD7 - 0x67, NUMPAD8 - 0x68, NUMPAD9 - 0x69
-			//  + 0xBB  ,0xBC  -0xBD  .0xBE ?0xBF  0xDB  0xDC
 			
             ,{"NUM0",new KeyItem(0x60)}
             ,{"NUM1",new KeyItem(0x61)}

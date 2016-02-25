@@ -2,27 +2,27 @@
 <layout width="150" height="250" vpos="center" hpos="right" margin="6,20,6,6">
   
   <row>
-    <key code="DECIMAL" text="P"/>
-    <key code="NUM7" text="x"/>
-    <key code="NUM0" text="C"/>
+    <key code="DECIMAL" text="\uf247" fsize="14"/>
+    <key code="NUM7" text="\uf102" fsize="20"/>
+    <key code="NUM0" text="\uf03d" fsize="14"/>
   </row>
 
   <row>
-    <key code="LCTRL NUM3" text="x"/>
-    <key code="NUM1" text="x"/>
-    <key code="NUM3" text="x"/>
+    <key code="LCTRL NUM3" text="\uf100" fsize="20"/>
+    <key code="NUM1" text="\uf069" fsize="15"/>
+    <key code="NUM3" text="\uf101" fsize="20"/>
   </row>
   
   <row>
-    <key code="t" text="T"/>
-    <key code="LCTRL NUM7" text="x"/>
-    <key code="n" text="N"/>
+    <key code="t" text="\uf0db" fsize="16"/>
+    <key code="LCTRL NUM7" text="\uf103" fsize="20"/>
+    <key code="n" text="\uf0db" fsize="16"/>
   </row>
     
   <row>
-    <key code="TAB" text="Modes"/>
-    <key code="z" text="Wire"/>
-    <key code="LSHIFT c" text="Center"/>
+    <key code="TAB" text="\uf1b2" fsize="20"/>
+    <key code="z" text="\uf20e" fsize="20"/>
+    <key code="LSHIFT c" text="\uf05b" fsize="20"/>
   </row>
   
   <row>
@@ -45,7 +45,7 @@
   </row>
 
   <row>
-    <menu text="Misc">
+    <menu text="\uf078" fsize="16">
       <key code="LCTRL b" text="Bevel"/>
       <key code="i" text="Inset"/>
       <key code="LSHIFT d" text="Duplicate"/>

@@ -3,35 +3,35 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:ok="clr-namespace:OpenKeyboard"
 		Topmost="True" Icon="icon.ico" WindowStyle="none" Opacity="1" AllowsTransparency="true" ResizeMode="CanResizeWithGrip"
-        Title="OpenKeyboard" Height="50" Width="50" Top="-1000" Left="-1000" Background="#1e1e1e" Loaded="Window_Loaded">
-	<Window.Resources>
-		<Style TargetType="{x:Type ok:vButton}">
-			<Setter Property="Background" Value="#2d2d30"/>
-			<Setter Property="Foreground" Value="white"/>
-			<Setter Property="Margin" Value="2"/>
+        Title="OpenKeyboard" Height="80" Width="90" Top="-1000" Left="-1000" Background="#1e1e1e" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="{x:Type ok:vButton}">
+            <Setter Property="Background" Value="#2d2d30"/>
+            <Setter Property="Foreground" Value="white"/>
+            <Setter Property="Margin" Value="2"/>
 
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type ok:vButton}">
-						<Grid>
-							<Rectangle x:Name="BtnBackground" Fill="{TemplateBinding Background}"></Rectangle>
-							<TextBlock x:Name="ShiftText" FontSize="11" Foreground="Gray" Margin="0,0,3,1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ShiftText}"/>
-							<ContentPresenter x:Name="BtnContent" VerticalAlignment="center" HorizontalAlignment="center" Content="{TemplateBinding Content}"/>
-						</Grid>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-			
-			<Style.Triggers>
-				<Trigger Property="IsMouseOver" Value="true">
-					<Setter Property="Foreground" Value="Lime"/>
-					<Setter Property="Background" Value="#404045"/>
-				</Trigger>
-				<Trigger Property="IsPressed" Value="true">
-					<Setter Property="Background" Value="#007acc"/>
-				</Trigger>
-			</Style.Triggers>
-		</Style>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ok:vButton}">
+                        <Grid>
+                            <Rectangle x:Name="BtnBackground" Fill="{TemplateBinding Background}"></Rectangle>
+                            <TextBlock x:Name="ShiftText" FontSize="11" Foreground="Gray" Margin="0,0,3,1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ShiftText}"/>
+                            <ContentPresenter x:Name="BtnContent" VerticalAlignment="center" HorizontalAlignment="center" Content="{TemplateBinding Content}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Foreground" Value="Lime"/>
+                    <Setter Property="Background" Value="#404045"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="Background" Value="#007acc"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
         <!--
         <Style TargetType="{x:Type ContextMenu}">
@@ -40,13 +40,13 @@
             <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
         </Style>-->
     </Window.Resources>
-	
-	<Window.Triggers>
+
+    <Window.Triggers>
         <!--
 		<EventTrigger RoutedEvent="Window.Loaded"><BeginStoryboard>
             <Storyboard><DoubleAnimation Duration="00:00:01" Storyboard.TargetProperty="Opacity" To="1" /></Storyboard>
 		</BeginStoryboard></EventTrigger>-->
-	</Window.Triggers>
+    </Window.Triggers>
 
     <Grid Name="mainContainer" Margin="6,20,6,6"></Grid>
 </Window>
