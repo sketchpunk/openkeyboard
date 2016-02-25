@@ -90,27 +90,62 @@ namespace OpenKeyboard{
 		}//func
 
 		private static vButton CreateButton(XmlElement elm,int col){
-			string code = elm.GetAttribute("code");
-			string shCode = elm.GetAttribute("shcode");
-			string shText = elm.GetAttribute("shtext");
 			string title = elm.GetAttribute("text");
-			
-			vButton btn = new vButton(){};
+            string code, shCode, shText;
+
+            vButton btn = new vButton(){};
 			Grid.SetRow(btn,0);
 			Grid.SetColumn(btn,col);
 
-			if(!String.IsNullOrEmpty(code)) btn.KBKeys = code.Split(' ');
-			if(!String.IsNullOrEmpty(shCode)) btn.KBShKeys = shCode.Split(' ');
-			if(!String.IsNullOrEmpty(shText)) btn.ShiftText = shText;
+            btn.Content = title;
 
-			btn.Content = title;
-			btn.SendString = elm.GetAttribute("string");
-			btn.shSendString = elm.GetAttribute("shstring");
-			btn.Click += vKeyboard.OnKeyPress;
+            switch(elm.Name){
+                //.........................................
+                case "key":
+                    code = elm.GetAttribute("code");
+                    shCode = elm.GetAttribute("shcode");
+                    shText = elm.GetAttribute("shtext");
+
+                    if(!String.IsNullOrEmpty(code)) btn.KBCommand.KBKeys = code.Split(' ');
+			        if(!String.IsNullOrEmpty(shCode)) btn.KBCommand.KBShKeys = shCode.Split(' ');
+			        if(!String.IsNullOrEmpty(shText)) btn.ShiftText = shText;
+
+                    btn.KBCommand.SendString = elm.GetAttribute("string");
+                    btn.KBCommand.shSendString = elm.GetAttribute("shstring");
+                    btn.Click += OnButtonPress;
+                    break;
+                //.........................................
+                case "menu":
+                    ContextMenu menu = new ContextMenu();
+                    KeyboardCommand kbCmd;
+                    MenuItem mItem;
+
+                    foreach(XmlElement itm in elm.ChildNodes){
+                        kbCmd = new KeyboardCommand();
+                        title = itm.GetAttribute("text");
+                        code = itm.GetAttribute("code");
+
+                        if(!String.IsNullOrEmpty(code)) kbCmd.KBKeys = code.Split(' ');
+                        kbCmd.SendString = itm.GetAttribute("string");
+
+                        mItem = new MenuItem() { Header = title, Tag = kbCmd };
+                        mItem.Click += OnMenuClick;
+                        menu.Items.Add(mItem);
+                    }//for
+
+                    btn.ContextMenu = menu;
+                    btn.Click += OnMenuButtonPress;
+                    break;
+            }//switch
+        
 			return btn;
 		}//func
 
-		private static string RootPath(string relativePath){
+        public static void OnMenuClick(object sender, RoutedEventArgs e) { vKeyboard.ProcessCommand((KeyboardCommand)(sender as MenuItem).Tag); }
+        public static void OnButtonPress(Object sender, RoutedEventArgs e) { vKeyboard.ProcessCommand((sender as vButton).KBCommand); }//func
+        public static void OnMenuButtonPress(Object sender, RoutedEventArgs e) { (sender as vButton).ContextMenu.IsOpen = true; }//func
+
+        private static string RootPath(string relativePath){
 			string rtn = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 			if(!rtn.EndsWith("\\")) rtn += "\\";
 

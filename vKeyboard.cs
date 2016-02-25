@@ -5,7 +5,14 @@ using System.Windows.Interop;
 using System.Runtime.InteropServices;
 
 namespace OpenKeyboard{
-	public struct KeyItem{
+    public struct KeyboardCommand{
+        public string[] KBKeys;
+        public string[] KBShKeys;
+        public string SendString;
+        public string shSendString;
+    }//struct
+
+    public struct KeyItem{
 		public int code;
 		public bool isUpLast;
 		public string extendCode;
@@ -66,7 +73,6 @@ namespace OpenKeyboard{
 		};
 		#endregion
 
-
 		private static bool mIsShiftActive = false;
 		public static bool isShiftActive{
 			set{mIsShiftActive = value;}
@@ -89,56 +95,60 @@ namespace OpenKeyboard{
 			else	keybd_event((byte) key, 0x45, KEYEVENTF_EXTENDEDKEY, (UIntPtr) 0);
 		}//func
 
-		public static void OnKeyPress(Object sender, RoutedEventArgs e){
-			vButton btn = (vButton)sender;
+		public static void ProcessCommand(KeyboardCommand kbCmd){
 			List<int> aryLast = new List<int>();
 
+            //........................................................
 			//if shift and shSendString exists, then send that instead.
-			if(isShiftActive && !String.IsNullOrEmpty(btn.shSendString)){
-				System.Windows.Forms.SendKeys.SendWait(btn.SendString);
+			if(isShiftActive && !String.IsNullOrEmpty(kbCmd.shSendString)){
+				System.Windows.Forms.SendKeys.SendWait(kbCmd.SendString);
 				isShiftActive = false;
 				return;
 			}//if
 
-			//if SendString exists, then send that instead.
-			if(!String.IsNullOrEmpty(btn.SendString)){
-				System.Windows.Forms.SendKeys.SendWait(btn.SendString);
+            //........................................................
+            //if SendString exists, then send that instead.
+            if(!String.IsNullOrEmpty(kbCmd.SendString)){
+				System.Windows.Forms.SendKeys.SendWait(kbCmd.SendString);
 				return;
 			}//if
 
-			//User clicked shift, So just toggle shift state.
-			if(btn.KBKeys.Length == 1 && (btn.KBKeys[0] == "RSHIFT" || btn.KBKeys[0] == "LSHIFT")){
+            //........................................................
+            //User clicked shift, So just toggle shift state.
+            if(kbCmd.KBKeys != null && kbCmd.KBKeys.Length == 1 && (kbCmd.KBKeys[0] == "RSHIFT" || kbCmd.KBKeys[0] == "LSHIFT")){
 				vKeyboard.isShiftActive = (vKeyboard.isShiftActive)?false:true;
 				return;
 			}//if
 
 			//Process the array of keys to execute
 			KeyItem ki;
-			String[] aryKey = btn.KBKeys;
+			String[] aryKey = kbCmd.KBKeys;
 
 			//did the user press shift before
 			if(isShiftActive){
-				if(btn.KBShKeys != null){ //if there is a shift code, close shift and use those codes instead.
-					aryKey = btn.KBShKeys;
+				if(kbCmd.KBShKeys != null){ //if there is a shift code, close shift and use those codes instead.
+					aryKey = kbCmd.KBShKeys;
 					isShiftActive = false;
 				}else PressKey(KeyDict["LSHIFT"].code,false); //Call shift	
 			}//if
 
-			for(int i=0; i < aryKey.Length; i++){
-				if(! KeyDict.ContainsKey(aryKey[i])) continue;
-				ki = KeyDict[aryKey[i]];
+            if(aryKey != null) { 
+			    for(int i=0; i < aryKey.Length; i++){
+				    if(! KeyDict.ContainsKey(aryKey[i])) continue;
+				    ki = KeyDict[aryKey[i]];
 	
-				if(ki.extendCode == null){
-					PressKey(ki.code,false);
-					if(ki.isUpLast) aryLast.Add(ki.code);
-					else PressKey(ki.code,true);
-				}else{
-					System.Windows.Forms.SendKeys.SendWait(ki.extendCode);
-				}//if
-			}//for
+				    if(ki.extendCode == null){
+					    PressKey(ki.code,false);
+					    if(ki.isUpLast) aryLast.Add(ki.code);
+					    else PressKey(ki.code,true);
+				    }else{
+					    System.Windows.Forms.SendKeys.SendWait(ki.extendCode);
+				    }//if
+			    }//for
+            }//if
 
-			//Some keys must be pressed up last, do it in reverse order
-			if(aryLast.Count > 0){
+            //Some keys must be pressed up last, do it in reverse order
+            if(aryLast.Count > 0){
 				for(int i=aryLast.Count-1; i >= 0; i--) PressKey(aryLast[i],true);
 			}//if
 

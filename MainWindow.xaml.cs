@@ -26,7 +26,7 @@ namespace OpenKeyboard{
 				//Check which keyboard profile to load in.
 				string[] args = Environment.GetCommandLineArgs();
 				if(args.Length > 1) vLayout.Load(args[1],mainContainer,this);
-				else vLayout.Load("Default",mainContainer,this);
+				else vLayout.Load("Media",mainContainer,this);
 
                 CreateContextMenu();
                 LoadLayoutList();
@@ -48,7 +48,7 @@ namespace OpenKeyboard{
         #endregion
 
         #region Menu Events
-        private void OpacityMenu_Click(object sender, RoutedEventArgs e) {
+            private void OpacityMenu_Click(object sender, RoutedEventArgs e) {
                 double tag = double.Parse((sender as MenuItem).Tag.ToString());
                 this.Opacity = (tag / 100);
             }//func

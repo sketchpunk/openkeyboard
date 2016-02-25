@@ -9,13 +9,10 @@ using System.Windows.Controls;
 
 namespace OpenKeyboard{
 	public class vButton : Button{
-		public string[] KBKeys = null;
-		public string[] KBShKeys = null;
-		public string SendString = "";
-		public string shSendString = "";
-
-		// Dependency Property
-		public static DependencyProperty ShiftTextProperty = DependencyProperty.Register("ShiftText", typeof(string), typeof(TextBlock), new FrameworkPropertyMetadata(""));
+        public KeyboardCommand KBCommand;
+  
+        // Dependency Property
+        public static DependencyProperty ShiftTextProperty = DependencyProperty.Register("ShiftText", typeof(string), typeof(TextBlock), new FrameworkPropertyMetadata(""));
 		public string ShiftText{
 			get { return (string)this.GetValue(ShiftTextProperty); }
 			set { this.SetValue(ShiftTextProperty, value); } 
