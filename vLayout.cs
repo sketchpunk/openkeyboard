@@ -46,9 +46,23 @@ namespace OpenKeyboard{
 				case "right": uiWindow.Left = sWidth - uiWindow.Width - 20; break;
 			}//switch
 
-			//..........................................
-			//Reset UI Grid
-			uiGrid.Children.Clear();
+            //..........................................
+            string sMargin = root.GetAttribute("margin");
+            if(!String.IsNullOrEmpty(sMargin)){
+                String[] aryMargin = sMargin.Split(',');
+                if(aryMargin.Length == 4){
+                    uiGrid.Margin = new Thickness(
+                        int.Parse(aryMargin[0])
+                        , int.Parse(aryMargin[1])
+                        , int.Parse(aryMargin[2])
+                        , int.Parse(aryMargin[3])
+                   );
+                }//if
+            }//if
+
+            //..........................................
+            //Reset UI Grid
+            uiGrid.Children.Clear();
 			uiGrid.RowDefinitions.Clear();
 			uiGrid.ColumnDefinitions.Clear();
 

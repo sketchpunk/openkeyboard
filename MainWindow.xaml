@@ -48,5 +48,5 @@
 		</BeginStoryboard></EventTrigger>-->
 	</Window.Triggers>
 
-    <Grid Name="mainContainer" Margin="6,25,6,6"></Grid>
+    <Grid Name="mainContainer" Margin="6,20,6,6"></Grid>
 </Window>
