@@ -26,17 +26,33 @@ namespace OpenKeyboard {
     public abstract class vKeyboard {
         #region Keyboard Code Dictionary - NOTE:Maybe remove and make it part of the XML
         //http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx
+        //http://www.kbdedit.com/manual/low_level_vk_list.html
         private static Dictionary<string, KeyItem> KeyDict = new Dictionary<string, KeyItem>(){
-            {"LSHIFT",new KeyItem(0xA0,true)}   ,{"RSHIFT",new KeyItem(0xA1,true)}
+            {"LSHIFT",new KeyItem(0xA0,true)}   ,{"RSHIFT",new KeyItem(0xA1,true)}  ,{"SHIFT",new KeyItem(0x10,true)}
+            ,{"ALT",new KeyItem(0x12,true)}     ,{"LALT",new KeyItem(0xA4,true)}    ,{"RALT",new KeyItem(0xA5,true)}
             ,{"LCTRL",new KeyItem(0xA2,true)}   ,{"RCTRL",new KeyItem(0xA3,true)}
             ,{"PGUP",new KeyItem(0x21,true)}    ,{"PGDOWN",new KeyItem(0x22,true)}
             ,{"HOME",new KeyItem(0x24,true)}    ,{"END",new KeyItem(0x23,true)}
-			
+            ,{"LWIN",new KeyItem(0x5B,true)}    ,{"RWIN",new KeyItem(0x5C,true)}
+            
 			//LWIN - 0x5B, RWIN 0x5C
 			//NUMPAD0 - 0x60, NUMPAD1 - 0x61, NUMPAD2 - 0x62, NUMPAD3 - 0x63, NUMPAD4 - 0x64, NUMPAD5 - 0x65, NUMPAD6 - 0x66, NUMPAD7 - 0x67, NUMPAD8 - 0x68, NUMPAD9 - 0x69
 			//  + 0xBB  ,0xBC  -0xBD  .0xBE ?0xBF  0xDB  0xDC
 			
-			,{"OEM2",new KeyItem(0xBF)} // /?
+            ,{"NUM0",new KeyItem(0x60)}
+            ,{"NUM1",new KeyItem(0x61)}
+            ,{"NUM2",new KeyItem(0x62)}
+            ,{"NUM3",new KeyItem(0x63)}
+            ,{"NUM4",new KeyItem(0x64)}
+            ,{"NUM5",new KeyItem(0x65)}
+            ,{"NUM6",new KeyItem(0x66)}
+            ,{"NUM7",new KeyItem(0x67)}
+            ,{"NUM8",new KeyItem(0x68)}
+            ,{"NUM9",new KeyItem(0x69)}
+            ,{"DECIMAL",new KeyItem(0x6E)}
+                
+
+            ,{"OEM2",new KeyItem(0xBF)} // /?
 			,{"OEM1",new KeyItem(0xBA)} //;:
 			,{"OEM4",new KeyItem(0xDB)} //[{
 			,{"OEM6",new KeyItem(0xDD)} //]}
@@ -83,17 +99,26 @@ namespace OpenKeyboard {
         #region Constants
         private const int KEYEVENTF_EXTENDEDKEY = 0x1;
         private const int KEYEVENTF_KEYUP = 0x2;
+        private const int KEYEVENTF_KEYDOWN = 0x0;
         private const int KE_KEYUP = KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP;
         #endregion
 
         #region DLL Imports
         [DllImport("user32.dll", SetLastError = true)]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern uint MapVirtualKey(uint uCode, uint uMapType);
         #endregion
 
         public static void PressKey(int key, bool up) {
-            if(up) keybd_event((byte)key, 0x45, KE_KEYUP, (UIntPtr)0);
-            else keybd_event((byte)key, 0x45, KEYEVENTF_EXTENDEDKEY, (UIntPtr)0);
+            //if(up) keybd_event((byte)key, 0x45, KE_KEYUP, (UIntPtr)0);
+            //else keybd_event((byte)key, 0x45, KEYEVENTF_EXTENDEDKEY, (UIntPtr)0);
+
+            uint scanCode = MapVirtualKey((uint)key, 0);
+
+            if(up) keybd_event((byte)key, (byte)scanCode, KEYEVENTF_KEYUP, (UIntPtr)0);
+            else keybd_event((byte)key, (byte)scanCode, KEYEVENTF_KEYDOWN, (UIntPtr)0);
         }//func
 
         public static void ProcessCommand(KeyboardCommand kbCmd) {
@@ -140,7 +165,8 @@ namespace OpenKeyboard {
 
                     if(ki.extendCode == null) {
                         PressKey(ki.code, false);
-                        if(ki.isUpLast) aryLast.Add(ki.code);
+         
+                        if(ki.isUpLast){ aryLast.Add(ki.code); }
                         else PressKey(ki.code, true);
                     } else {
                         System.Windows.Forms.SendKeys.SendWait(ki.extendCode);
@@ -150,7 +176,9 @@ namespace OpenKeyboard {
 
             //Some keys must be pressed up last, do it in reverse order
             if(aryLast.Count > 0) {
-                for(int i = aryLast.Count - 1; i >= 0; i--) PressKey(aryLast[i], true);
+                for(int i = aryLast.Count - 1; i >= 0; i--){
+                    PressKey(aryLast[i], true);
+                }//if
             }//if
 
             //user pressed shift before, close key call and reset
