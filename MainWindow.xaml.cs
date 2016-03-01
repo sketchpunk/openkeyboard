@@ -27,8 +27,13 @@ namespace OpenKeyboard{
 
 				//Check which keyboard profile to load in.
 				string[] args = Environment.GetCommandLineArgs();
-				if(args.Length > 1) { vLayout.Load(args[1],mainContainer,this); }
-				else vLayout.Load("Thumbbar",mainContainer,this);
+                string layoutName = (args.Length > 1) ? layoutName = args[1] : "Default";
+
+                if(!vLayout.Load(layoutName, mainContainer, this)){
+                    MessageBox.Show("Error loading layout:" + layoutName);
+                    this.Close();
+                    return;
+                }//if
 
                 CreateContextMenu();
                 LoadLayoutList();

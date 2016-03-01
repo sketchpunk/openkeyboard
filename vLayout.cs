@@ -8,85 +8,93 @@ namespace OpenKeyboard{
 	public abstract class vLayout{
         public static FontFamily mIconFont = new FontFamily(new Uri("pack://application:,,,/fonts/#FontAwesome"), "./#FontAwesome");
 
-        public static void Load(string fName,Grid uiGrid,Window uiWindow){
-			//..........................................
-			//Load up Layout XML
-			XmlDocument xml = new XmlDocument();
-			xml.Load(RootPath("Layouts\\" + fName + ".xml"));
+        public static bool Load(string fName,Grid uiGrid,Window uiWindow){
+            try{ 
+			    //..........................................
+			    //Load up Layout XML
+			    XmlDocument xml = new XmlDocument();
+			    xml.Load(RootPath("Layouts\\" + fName + ".xml"));
 
-			XmlElement root = xml.DocumentElement;
-			if(root.ChildNodes.Count == 0) return;
+			    XmlElement root = xml.DocumentElement;
+			    if(root.ChildNodes.Count == 0) return false;
 
-			//..........................................
-			//Set window size and position
-			double sHeight = SystemParameters.WorkArea.Height;
-            double sWidth = SystemParameters.WorkArea.Width;
+			    //..........................................
+			    //Set window size and position
+			    double sHeight = SystemParameters.WorkArea.Height;
+                double sWidth = SystemParameters.WorkArea.Width;
 			
-			uiWindow.Width = double.Parse(root.GetAttribute("width"));
-			uiWindow.Height = double.Parse(root.GetAttribute("height"));
+			    uiWindow.Width = double.Parse(root.GetAttribute("width"));
+			    uiWindow.Height = double.Parse(root.GetAttribute("height"));
 
-			switch(root.GetAttribute("vpos")){
-				case "top": uiWindow.Top = 20; break;
-				case "center": uiWindow.Top = (sHeight - uiWindow.Height) / 2; break;
-				case "bottom": uiWindow.Top = sHeight - uiWindow.Height - 20; break;
-			}//switch
+			    switch(root.GetAttribute("vpos")){
+				    case "top": uiWindow.Top = 20; break;
+				    case "center": uiWindow.Top = (sHeight - uiWindow.Height) / 2; break;
+				    case "bottom": uiWindow.Top = sHeight - uiWindow.Height - 20; break;
+			    }//switch
 
-			switch(root.GetAttribute("hpos")){
-				case "left": uiWindow.Left = 20; break;
-				case "center": uiWindow.Left = (sWidth - uiWindow.Width) / 2; break;
-				case "right": uiWindow.Left = sWidth - uiWindow.Width - 20; break;
-			}//switch
+			    switch(root.GetAttribute("hpos")){
+				    case "left": uiWindow.Left = 20; break;
+				    case "center": uiWindow.Left = (sWidth - uiWindow.Width) / 2; break;
+				    case "right": uiWindow.Left = sWidth - uiWindow.Width - 20; break;
+			    }//switch
 
-            //..........................................
-            string sMargin = root.GetAttribute("margin");
-            if(!String.IsNullOrEmpty(sMargin)){
-                String[] aryMargin = sMargin.Split(',');
-                if(aryMargin.Length == 4){
-                    uiGrid.Margin = new Thickness(
-                        int.Parse(aryMargin[0])
-                        , int.Parse(aryMargin[1])
-                        , int.Parse(aryMargin[2])
-                        , int.Parse(aryMargin[3])
-                   );
+                //..........................................
+                string sMargin = root.GetAttribute("margin");
+                if(!String.IsNullOrEmpty(sMargin)){
+                    String[] aryMargin = sMargin.Split(',');
+                    if(aryMargin.Length == 4){
+                        uiGrid.Margin = new Thickness(
+                            int.Parse(aryMargin[0])
+                            , int.Parse(aryMargin[1])
+                            , int.Parse(aryMargin[2])
+                            , int.Parse(aryMargin[3])
+                       );
+                    }//if
                 }//if
-            }//if
 
-            //..........................................
-            //Reset UI Grid
-            uiGrid.Children.Clear();
-			uiGrid.RowDefinitions.Clear();
-			uiGrid.ColumnDefinitions.Clear();
+                //..........................................
+                //Reset UI Grid
+                uiGrid.Children.Clear();
+			    uiGrid.RowDefinitions.Clear();
+			    uiGrid.ColumnDefinitions.Clear();
 
-			//Create all the rows on the main UI Grid
-			for(int i=0; i < root.ChildNodes.Count; i++) uiGrid.RowDefinitions.Add(new RowDefinition(){ Height=new GridLength(1,GridUnitType.Star) });
+			    //Create all the rows on the main UI Grid
+			    for(int i=0; i < root.ChildNodes.Count; i++) uiGrid.RowDefinitions.Add(new RowDefinition(){ Height=new GridLength(1,GridUnitType.Star) });
 
-			//..........................................
-			//Reset UI Grid
-			int iRow=0,iKey=0;
-			Grid rGrid;
+			    //..........................................
+			    //Reset UI Grid
+			    int iRow=0,iKey=0;
+			    Grid rGrid;
 
-			foreach(XmlNode row in root.ChildNodes){
-				//Create Key Row Container
-				rGrid = CreateGrid();
-				Grid.SetRow(rGrid,iRow);
-				Grid.SetColumn(rGrid,0);
-				uiGrid.Children.Add(rGrid);
+			    foreach(XmlNode row in root.ChildNodes){
+				    //Create Key Row Container
+				    rGrid = CreateGrid();
+				    Grid.SetRow(rGrid,iRow);
+				    Grid.SetColumn(rGrid,0);
+				    uiGrid.Children.Add(rGrid);
 
-				//Create Keys
-				iKey=0;
-				double gLen = 0;
-				string sgLen = "";
-				foreach(XmlElement key in row.ChildNodes){
-					sgLen = key.GetAttribute("weight");
-					gLen = (String.IsNullOrEmpty(sgLen))?1:Double.Parse(sgLen);
+				    //Create Keys
+				    iKey=0;
+				    double gLen = 0;
+				    string sgLen = "";
+				    foreach(XmlElement key in row.ChildNodes){
+					    sgLen = key.GetAttribute("weight");
+					    gLen = (String.IsNullOrEmpty(sgLen))?1:Double.Parse(sgLen);
 
-					rGrid.ColumnDefinitions.Add(new ColumnDefinition(){ Width=new GridLength(gLen,GridUnitType.Star) });
-					rGrid.Children.Add(CreateButton(key,iKey));
-					iKey++;
-				}//for
-				iRow++;
-			}//for
-		}//func
+					    rGrid.ColumnDefinitions.Add(new ColumnDefinition(){ Width=new GridLength(gLen,GridUnitType.Star) });
+					    rGrid.Children.Add(CreateButton(key,iKey));
+					    iKey++;
+				    }//for
+				    iRow++;
+			    }//for
+
+                return true;
+            }catch(Exception e) {
+                vLogger.Exception("vLayout.Load", e, fName);
+            }//try
+
+            return false;
+        }//func
 
 		private static Grid CreateGrid(){
 			Grid grid = new Grid();
