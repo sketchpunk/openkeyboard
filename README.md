@@ -49,3 +49,6 @@ Here a simple example of a layout xml file.
 **Things that may be of help:**
 * [FontAwesome CheetSheet](http://fortawesome.github.io/Font-Awesome/cheatsheet/)
 
+### Links
+* [SketchPunk Labs Blog](http://sketchpunklabs.tumblr.com/)
+* [Support SketchPunk Labs @ Patreon](https://www.patreon.com/sketchpunk)
