@@ -61,15 +61,39 @@ namespace OpenKeyboard
 
             CreateContextMenu();
             LoadLayoutList();
-
-            this.MouseLeftButtonDown += MainWindow_LeftButtonDown;
         }//func
 
-        private void MainWindow_LeftButtonDown(object sender, MouseButtonEventArgs e)
+        bool inDrag = false;
+        Point anchorPoint;
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            this.DragMove(); //Allow user to drag window around when they right click anywhere in the window.
+            anchorPoint = PointToScreen(e.GetPosition(this));
+            inDrag = true;
+            CaptureMouse();
             e.Handled = true;
-        }//func
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (inDrag)
+            {
+                Point currentPoint = PointToScreen(e.GetPosition(this));
+                this.Left = this.Left + currentPoint.X - anchorPoint.X;
+                this.Top = this.Top + currentPoint.Y - anchorPoint.Y;
+                anchorPoint = currentPoint;
+            }
+        }
+
+        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            if (inDrag)
+            {
+                ReleaseMouseCapture();
+                inDrag = false;
+                e.Handled = true;
+            }
+        }
 
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
