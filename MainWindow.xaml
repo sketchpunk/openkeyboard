@@ -5,6 +5,16 @@
 		Topmost="True" Icon="icon.ico" WindowStyle="none" Opacity="1" AllowsTransparency="true" ResizeMode="CanResizeWithGrip"
         Title="OpenKeyboard" Height="80" Width="90" Top="-1000" Left="-1000" Background="#1e1e1e" Loaded="Window_Loaded">
     <Window.Resources>
+        <VisualBrush x:Key="DotFillBrush" 
+                     TileMode="Tile" 
+                     Viewport="0,0,5,5" 
+                     ViewportUnits="Absolute" 
+                     Viewbox="0,0,6,6"
+                     ViewboxUnits="Absolute">
+            <VisualBrush.Visual>
+                <Ellipse Fill="LightGray" Width="3" Height="3" />
+            </VisualBrush.Visual>
+        </VisualBrush>
         <Style TargetType="{x:Type ok:vButton}">
             <Setter Property="Background" Value="#2d2d30"/>
             <Setter Property="Foreground" Value="white"/>
@@ -48,5 +58,7 @@
 		</BeginStoryboard></EventTrigger>-->
     </Window.Triggers>
 
-    <Grid Name="mainContainer" Margin="6,20,6,6"></Grid>
+    <Border BorderThickness="0,8,0,0" BorderBrush="{StaticResource DotFillBrush}" Margin="1,1,0,0">
+        <Grid Name="mainContainer" Margin="6,20,6,6"></Grid>
+    </Border>
 </Window>
