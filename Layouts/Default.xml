@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layout width="780" height="140" vpos="bottom" hpos="center" margin="20,6,6,6">  
+<layout width="1400" height="200" vpos="auto" hpos="auto" margin="20,6,6,6">  
 	<row>
-		<key code="q" text="q"/>
+		<key code="q" text="q" shtext="Q"/>
 		<key code="w" text="w"/>
 		<key code="e" text="e"/>
 		<key code="r" text="r"/>
@@ -11,7 +11,7 @@
 		<key code="i" text="i"/>
 		<key code="o" text="o"/>
 		<key code="p" text="p"/>
-		<key code="OEM4" text="[" shtext="{"/>
+		<key code="OEM4" text="'" shtext="?"/>
 		<key code="OEM6" text="]" shtext="}"/>
 		<key code="TAB" text="Tab" weight="1"/>
 		<key code="BACKSPACE" text="Back"/>
@@ -33,7 +33,7 @@
 		<key code="j" text="j"/>
 		<key code="k" text="k"/>
 		<key code="l" text="l"/>
-		<key code="OEM1" text=";" shtext=":"/>
+		<key code="OEM1" text="è" shtext="é"/>
 		<key code="OEM7" text="'" shtext="&quot;"/>
 		<key string="-" text="-" shstring="_" shtext="_"/>
 		<key code="ENTER" text="Enter" weight="1"/>

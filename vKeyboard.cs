@@ -48,12 +48,17 @@ namespace OpenKeyboard {
             ,{"DECIMAL",new KeyItem(0x6E)}
                 
 
-            ,{"OEM2",new KeyItem(0xBF)} // /?
-			,{"OEM1",new KeyItem(0xBA)} //;:
-			,{"OEM4",new KeyItem(0xDB)} //[{
-			,{"OEM6",new KeyItem(0xDD)} //]}
-			,{"OEM5",new KeyItem(0xDC)} //|\
-			,{"OEM7",new KeyItem(0xDE)} //'"
+            ,{"OEM2",new KeyItem(0xBF)} // ù §
+			,{"OEM1",new KeyItem(0xBA)} // è é [
+			,{"OEM4",new KeyItem(0xDB)} // ' ?
+			,{"OEM6",new KeyItem(0xDD)} // ì ^
+			,{"OEM5",new KeyItem(0xDC)} // | \
+			,{"OEM7",new KeyItem(0xDE)} // à ° #
+            ,{"OEMMINUS",new KeyItem(0xBD)} // - _
+            ,{"OEMPERIOD",new KeyItem(0xBE)} // . :
+            ,{"OEM3",new KeyItem(0xC0)} // ò ç @
+            ,{"OEMPLUS",new KeyItem(0xBb)} // + * ]
+            ,{"OEM102",new KeyItem(0xE2)} // < >
 
 			,{"COMMA",new KeyItem(0xBC)},{"PERIOD",new KeyItem(0xBE)}
             ,{"SPACE",new KeyItem(0x20)},{"ENTER",new KeyItem(0x0D)},{"CAPSLOCK",new KeyItem(0x14)}
@@ -77,7 +82,8 @@ namespace OpenKeyboard {
 
             ,{"{!}",new KeyItem("{!}")},{"{@}",new KeyItem("{@}")},{"{#}",new KeyItem("{#}")},{"{$}",new KeyItem("{$}")},{"{%}",new KeyItem("{%}")}
             ,{"{^}",new KeyItem("{^}")},{"{&}",new KeyItem("{&}")},{"{*}",new KeyItem("{*}")},{"{(}",new KeyItem("{(}")},{"{)}",new KeyItem("{)}")}
-            ,{"{<}",new KeyItem("{<}")},{"{>}",new KeyItem("{>}")}
+            ,{"{<}",new KeyItem("{<}")},{"{>}",new KeyItem("{>}")},{"{\"}",new KeyItem("{\"}")},{"{£}",new KeyItem("{£}")},{"{/}",new KeyItem("{/}")}
+            ,{"{=}",new KeyItem("{=}")},{"{€}",new KeyItem("{€}")},{"{[}",new KeyItem("{[}")},{"{]}",new KeyItem("{]}")}
 
             ,{"TILDE",new KeyItem(0xC0)}
 
