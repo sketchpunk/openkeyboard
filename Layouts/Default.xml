@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layout width="1400" height="200" vpos="bottom" hpos="center" margin="20,6,6,6">  
+<layout width="1400" height="200" vpos="auto" hpos="auto" margin="20,6,6,6">  
 	<row>
 		<key code="q" text="q" shtext="Q"/>
 		<key code="w" text="w"/>

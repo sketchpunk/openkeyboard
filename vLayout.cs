@@ -3,14 +3,27 @@ using System.Xml;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Input;
+using System.Runtime.InteropServices;
 
 namespace OpenKeyboard
 {
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct Win32Point
+    {
+        public Int32 X;
+        public Int32 Y;
+    };
+
     public abstract class vLayout
     {
         public static FontFamily mIconFont = new FontFamily(new Uri("pack://application:,,,/fonts/#FontAwesome"), "./#FontAwesome");
 
         public static double defaultfsize = 24;
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetCursorPos(ref Win32Point pt);
 
         public static bool Load(string fName, Grid uiGrid, Window uiWindow)
         {
@@ -37,8 +50,21 @@ namespace OpenKeyboard
                 if (!String.IsNullOrEmpty(fsize))
                     defaultfsize = double.Parse(fsize);
 
+                Win32Point w32Mouse = new Win32Point();
+                GetCursorPos(ref w32Mouse);
+                var point = new Point(w32Mouse.X, w32Mouse.Y);
+
                 switch (root.GetAttribute("vpos"))
                 {
+                    case "auto":
+                        uiWindow.Top = point.Y + 50;
+
+                        if (uiWindow.Top + uiWindow.Height > sHeight)
+                            uiWindow.Top -= uiWindow.Height + 60;
+
+                        if (uiWindow.Top < 20)
+                            uiWindow.Top = (sHeight - uiWindow.Height) / 2;
+                        break;
                     case "top": uiWindow.Top = 20; break;
                     case "center": uiWindow.Top = (sHeight - uiWindow.Height) / 2; break;
                     case "bottom": uiWindow.Top = sHeight - uiWindow.Height - 20; break;
@@ -46,6 +72,15 @@ namespace OpenKeyboard
 
                 switch (root.GetAttribute("hpos"))
                 {
+                    case "auto":
+                        uiWindow.Left = point.X + 10;
+
+                        if (uiWindow.Left + uiWindow.Width > sWidth)
+                            uiWindow.Left -= uiWindow.Width;
+
+                        if (uiWindow.Left < 0)
+                            uiWindow.Left = (sWidth - uiWindow.Width) / 2;
+                        break;
                     case "left": uiWindow.Left = 20; break;
                     case "center": uiWindow.Left = (sWidth - uiWindow.Width) / 2; break;
                     case "right": uiWindow.Left = sWidth - uiWindow.Width - 20; break;
