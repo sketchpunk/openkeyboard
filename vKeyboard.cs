@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Interop;
 using System.Runtime.InteropServices;
 using System.Timers;
 
-namespace OpenKeyboard {
+namespace OpenKeyboard
+{
     public struct KeyboardCommand {
         public string[] KBKeys;
         public string[] KBShKeys;

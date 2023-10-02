@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Threading;
 
-namespace OpenKeyboard{
-	public partial class App : Application{
+namespace OpenKeyboard
+{
+    public partial class App : Application{
         public void App_Startup(object sender, StartupEventArgs e) {
             DispatcherUnhandledException += new DispatcherUnhandledExceptionEventHandler(App_DispatcherUnhandledException);
         }//event
