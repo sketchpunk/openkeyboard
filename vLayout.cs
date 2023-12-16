@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Xml;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Input;
-using System.Runtime.InteropServices;
+using System.Xml;
 
 namespace OpenKeyboard
 {
@@ -47,7 +46,7 @@ namespace OpenKeyboard
 
                 var fsize = root.GetAttribute("fsize");
 
-                if (!String.IsNullOrEmpty(fsize))
+                if (!string.IsNullOrEmpty(fsize))
                     defaultfsize = double.Parse(fsize);
 
                 Win32Point w32Mouse = new Win32Point();
@@ -88,9 +87,9 @@ namespace OpenKeyboard
 
                 //..........................................
                 string sMargin = root.GetAttribute("margin");
-                if (!String.IsNullOrEmpty(sMargin))
+                if (!string.IsNullOrEmpty(sMargin))
                 {
-                    String[] aryMargin = sMargin.Split(',');
+                    string[] aryMargin = sMargin.Split(',');
                     if (aryMargin.Length == 4)
                     {
                         uiGrid.Margin = new Thickness(
@@ -131,7 +130,7 @@ namespace OpenKeyboard
                     foreach (XmlElement key in row.ChildNodes)
                     {
                         sgLen = key.GetAttribute("weight");
-                        gLen = (String.IsNullOrEmpty(sgLen)) ? 1 : Double.Parse(sgLen);
+                        gLen = (string.IsNullOrEmpty(sgLen)) ? 1 : Double.Parse(sgLen);
 
                         rGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(gLen, GridUnitType.Star) });
                         rGrid.Children.Add(CreateButton(key, iKey));
@@ -168,7 +167,7 @@ namespace OpenKeyboard
             Grid.SetColumn(btn, col);
             btn.FontFamily = mIconFont;
             btn.Title = title;
-            if (!String.IsNullOrEmpty(fsize))
+            if (!string.IsNullOrEmpty(fsize))
                 btn.FontSize = double.Parse(fsize);
             else
                 btn.FontSize = defaultfsize;
@@ -181,9 +180,9 @@ namespace OpenKeyboard
                     shCode = elm.GetAttribute("shcode");
                     shText = elm.GetAttribute("shtext");
 
-                    if (!String.IsNullOrEmpty(code)) btn.KBCommand.KBKeys = code.Split(' ');
-                    if (!String.IsNullOrEmpty(shCode)) btn.KBCommand.KBShKeys = shCode.Split(' ');
-                    if (!String.IsNullOrEmpty(shText)) btn.ShiftText = shText;
+                    if (!string.IsNullOrEmpty(code)) btn.KBCommand.KBKeys = code.Split(' ');
+                    if (!string.IsNullOrEmpty(shCode)) btn.KBCommand.KBShKeys = shCode.Split(' ');
+                    if (!string.IsNullOrEmpty(shText)) btn.ShiftText = shText;
 
                     btn.KBCommand.SendString = elm.GetAttribute("string");
                     btn.KBCommand.shSendString = elm.GetAttribute("shstring");
@@ -206,7 +205,7 @@ namespace OpenKeyboard
                         title = itm.GetAttribute("text");
                         code = itm.GetAttribute("code");
 
-                        if (!String.IsNullOrEmpty(code)) kbCmd.KBKeys = code.Split(' ');
+                        if (!string.IsNullOrEmpty(code)) kbCmd.KBKeys = code.Split(' ');
                         kbCmd.SendString = itm.GetAttribute("string");
 
                         mItem = new MenuItem() { Header = title, Tag = kbCmd };

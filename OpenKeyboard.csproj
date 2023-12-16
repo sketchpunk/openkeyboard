@@ -83,6 +83,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="KeyboardCommand.cs" />
+    <Compile Include="KeyItem.cs" />
+    <Compile Include="KeyLoopHandler.cs" />
     <Compile Include="vButton.cs" />
     <Compile Include="vJumpList.cs" />
     <Compile Include="vLayout.cs" />

@@ -1,28 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Timers;
 
 namespace OpenKeyboard
 {
-    public struct KeyboardCommand {
-        public string[] KBKeys;
-        public string[] KBShKeys;
-        public string SendString;
-        public string shSendString;
-    }//struct
-
-    public struct KeyItem {
-        public int code;
-        public bool isUpLast;
-        public string extendCode;
-
-        public KeyItem(int c, bool isLast) { code = c; isUpLast = isLast; extendCode = null; }//func
-        public KeyItem(int c) { code = c; isUpLast = false; extendCode = null; }//func
-        public KeyItem(string exCode) { code = 0; isUpLast = false; extendCode = exCode; }//func
-    }//func
-
-    public abstract class vKeyboard {
+    public abstract class vKeyboard
+    {
         #region Keyboard Code Dictionary - NOTE:Maybe remove and make it part of the XML
         //http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx
         //http://www.kbdedit.com/manual/low_level_vk_list.html
@@ -33,7 +16,7 @@ namespace OpenKeyboard
             ,{"PGUP",new KeyItem(0x21,true)}    ,{"PGDOWN",new KeyItem(0x22,true)}
             ,{"HOME",new KeyItem(0x24,true)}    ,{"END",new KeyItem(0x23,true)}
             ,{"LWIN",new KeyItem(0x5B,true)}    ,{"RWIN",new KeyItem(0x5C,true)}
-			
+
             ,{"NUM0",new KeyItem(0x60)}
             ,{"NUM1",new KeyItem(0x61)}
             ,{"NUM2",new KeyItem(0x62)}
@@ -45,7 +28,7 @@ namespace OpenKeyboard
             ,{"NUM8",new KeyItem(0x68)}
             ,{"NUM9",new KeyItem(0x69)}
             ,{"DECIMAL",new KeyItem(0x6E)}
-                
+
 
             ,{"OEM2",new KeyItem(0xBF)} // ù §
 			,{"OEM1",new KeyItem(0xBA)} // è é [
@@ -92,7 +75,8 @@ namespace OpenKeyboard
         #endregion
 
         private static bool mIsShiftActive = false;
-        public static bool isShiftActive {
+        public static bool isShiftActive
+        {
             set { mIsShiftActive = value; }
             get { return mIsShiftActive; }
         }//func
@@ -112,22 +96,25 @@ namespace OpenKeyboard
         private static extern uint MapVirtualKey(uint uCode, uint uMapType);
         #endregion
 
-        public static void PressKey(int key, bool up) {
+        public static void PressKey(int key, bool up)
+        {
             //if(up) keybd_event((byte)key, 0x45, KE_KEYUP, (UIntPtr)0);
             //else keybd_event((byte)key, 0x45, KEYEVENTF_EXTENDEDKEY, (UIntPtr)0);
 
             uint scanCode = MapVirtualKey((uint)key, 0);
 
-            if(up) keybd_event((byte)key, (byte)scanCode, KEYEVENTF_KEYUP, (UIntPtr)0);
+            if (up) keybd_event((byte)key, (byte)scanCode, KEYEVENTF_KEYUP, (UIntPtr)0);
             else keybd_event((byte)key, (byte)scanCode, KEYEVENTF_KEYDOWN, (UIntPtr)0);
         }//func
 
-        public static void ProcessCommand(KeyboardCommand kbCmd) {
+        public static void ProcessCommand(KeyboardCommand kbCmd)
+        {
             List<int> aryLast = new List<int>();
 
             //........................................................
             //if shift and shSendString exists, then send that instead.
-            if(isShiftActive && !String.IsNullOrEmpty(kbCmd.shSendString)) {
+            if (isShiftActive && !string.IsNullOrEmpty(kbCmd.shSendString))
+            {
                 System.Windows.Forms.SendKeys.SendWait(kbCmd.SendString);
                 isShiftActive = false;
                 return;
@@ -135,87 +122,71 @@ namespace OpenKeyboard
 
             //........................................................
             //if SendString exists, then send that instead.
-            if(!String.IsNullOrEmpty(kbCmd.SendString)) {
+            if (!string.IsNullOrEmpty(kbCmd.SendString))
+            {
                 System.Windows.Forms.SendKeys.SendWait(kbCmd.SendString);
                 return;
             }//if
 
             //........................................................
             //User clicked shift, So just toggle shift state.
-            if(kbCmd.KBKeys != null && kbCmd.KBKeys.Length == 1 && (kbCmd.KBKeys[0] == "RSHIFT" || kbCmd.KBKeys[0] == "LSHIFT")) {
-                vKeyboard.isShiftActive = (vKeyboard.isShiftActive) ? false : true;
+            if (kbCmd.KBKeys != null && kbCmd.KBKeys.Length == 1 && (kbCmd.KBKeys[0] == "RSHIFT" || kbCmd.KBKeys[0] == "LSHIFT"))
+            {
+                isShiftActive = !isShiftActive;
                 return;
             }//if
 
             //Process the array of keys to execute
             KeyItem ki;
-            String[] aryKey = kbCmd.KBKeys;
+            string[] aryKey = kbCmd.KBKeys;
 
             //did the user press shift before
-            if(isShiftActive) {
-                if(kbCmd.KBShKeys != null) { //if there is a shift code, close shift and use those codes instead.
+            if (isShiftActive)
+            {
+                if (kbCmd.KBShKeys != null)
+                { //if there is a shift code, close shift and use those codes instead.
                     aryKey = kbCmd.KBShKeys;
                     isShiftActive = false;
-                } else PressKey(KeyDict["LSHIFT"].code, false); //Call shift	
+                }
+                else PressKey(KeyDict["LSHIFT"].code, false); //Call shift	
             }//if
 
-            if(aryKey != null) {
-                for(int i = 0; i < aryKey.Length; i++) {
-                    if(!KeyDict.ContainsKey(aryKey[i])) continue;
+            if (aryKey != null)
+            {
+                for (int i = 0; i < aryKey.Length; i++)
+                {
+                    if (!KeyDict.ContainsKey(aryKey[i])) continue;
                     ki = KeyDict[aryKey[i]];
 
-                    if(ki.extendCode == null) {
+                    if (ki.extendCode == null)
+                    {
                         PressKey(ki.code, false);
-         
-                        if(ki.isUpLast){ aryLast.Add(ki.code); }
+
+                        if (ki.isUpLast) { aryLast.Add(ki.code); }
                         else PressKey(ki.code, true);
-                    } else {
+                    }
+                    else
+                    {
                         System.Windows.Forms.SendKeys.SendWait(ki.extendCode);
                     }//if
                 }//for
             }//if
 
             //Some keys must be pressed up last, do it in reverse order
-            if(aryLast.Count > 0) {
-                for(int i = aryLast.Count - 1; i >= 0; i--){
+            if (aryLast.Count > 0)
+            {
+                for (int i = aryLast.Count - 1; i >= 0; i--)
+                {
                     PressKey(aryLast[i], true);
                 }//if
             }//if
 
             //user pressed shift before, close key call and reset
-            if(isShiftActive) {
+            if (isShiftActive)
+            {
                 PressKey(KeyDict["LSHIFT"].code, true);
                 isShiftActive = false;
             }//if
         }//func
-    }//cls
-
-    public abstract class KeyLoopHandler{
-        private static KeyboardCommand mKBCommand;
-        private static Timer mTimer = null;
-        private static bool mIsTimerOn = false;
-
-        public static void EndKeypress(){ StopTimer(); }//func
-        public static void BeginKeypress(KeyboardCommand cmd){
-            if(mIsTimerOn) return;
-            vKeyboard.ProcessCommand(cmd);
-
-            mKBCommand = cmd;
-            StartTimer();
-        }//for
-
-        private static void StopTimer() { mTimer.Stop(); mIsTimerOn = false; }
-        private static void StartTimer() {
-            if(mTimer == null) {
-                mTimer = new Timer();
-                mTimer.Interval = 200;
-                mTimer.Elapsed += new ElapsedEventHandler(onTick);
-            } else if(mIsTimerOn) return;
-
-            mTimer.Start();
-            mIsTimerOn = true;
-        }//func
-        
-        private static void onTick(object sender, ElapsedEventArgs e) {vKeyboard.ProcessCommand(mKBCommand); }
     }//cls
 }//ns

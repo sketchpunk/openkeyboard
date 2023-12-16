@@ -46,7 +46,7 @@ namespace OpenKeyboard
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             mWinController = new WindowController(this);
-            mWinController.DisableFocus(); //When window loses focus, prevent windows from getting focus back automaticly when clicking anything
+            mWinController.DisableFocus(); //When window loses focus, prevent windows from getting focus back automatically when clicking anything
 
             //Check which keyboard profile to load in.
             string[] args = Environment.GetCommandLineArgs();

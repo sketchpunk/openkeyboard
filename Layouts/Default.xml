@@ -56,7 +56,7 @@
 		<key code="m" text="m"/>
 		<key code="COMMA" text="," shcode="{&lt;}" shtext="&lt;"/>
 		<key code="PERIOD" text="." shcode="{&gt;}" shtext="&gt;"/>
-		<key code="OEM2" text="/" shtext="?"/>
+		<key code="{/}" text="/" shtext="?"/>
 		<key code="OEM5" text="\" shtext="|"/>
 		<key string="=" text="=" shstring="+" shtext="+"/>
 		<key code="SPACE" text="Space" weight="1"/>
