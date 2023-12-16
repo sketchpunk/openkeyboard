@@ -189,8 +189,6 @@ namespace OpenKeyboard
 
                     btn.PreviewMouseLeftButtonDown += BtnTouch_Down;
                     btn.PreviewMouseLeftButtonUp += BtnTouch_Up;
-                    btn.PreviewTouchDown += BtnTouch_Down;
-                    btn.PreviewTouchUp += BtnTouch_Up;
 
                     break;
                 //.........................................
