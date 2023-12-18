@@ -15,12 +15,13 @@ using System.Windows.Interop;
 
 namespace OpenKeyboard
 {
-
+    public delegate void RefreshButton(bool toUpper);
     public partial class MainWindow : Window
     {
         private WindowController mWinController = null;
         private ContextMenu mAppMenu;
 
+        public event RefreshButton RefreshButton;
         public MainWindow() { InitializeComponent(); }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -89,6 +90,8 @@ namespace OpenKeyboard
                 Top = Top + currentPoint.Y - anchorPoint.Y;
                 anchorPoint = currentPoint;
             }
+            
+            RefreshButton.Invoke(vKeyboard.isShiftActive || System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock));
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)

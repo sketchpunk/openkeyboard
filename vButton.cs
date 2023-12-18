@@ -22,7 +22,7 @@ namespace OpenKeyboard
             set
             {
                 if (value.StartsWith("\\u")) parseUnicode(value);
-                else this.Content = value;
+                else Content = value;
             }
         }//prop
 
@@ -34,7 +34,7 @@ namespace OpenKeyboard
             //Check if only one unicode escaped character in the string.
             if (txt.Length == 6)
             {
-                this.Content = (char)Int32.Parse(txt.Substring(2), System.Globalization.NumberStyles.HexNumber);
+                Content = (char)Int32.Parse(txt.Substring(2), System.Globalization.NumberStyles.HexNumber);
                 return;
             }//if
 
@@ -51,7 +51,15 @@ namespace OpenKeyboard
                 }//if
             }//while
 
-            this.Content = final;
+            Content = final;
         }//func
+
+        public void RefreshButton(bool toUpper)
+        {
+            var txt = Content as string;
+
+            if (txt.Length == 1)
+                Content = toUpper ? txt.ToUpper() : txt.ToLower();
+        }
     }//cls
 }//ns

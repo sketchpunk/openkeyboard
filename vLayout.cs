@@ -133,7 +133,12 @@ namespace OpenKeyboard
                         gLen = (string.IsNullOrEmpty(sgLen)) ? 1 : Double.Parse(sgLen);
 
                         rGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(gLen, GridUnitType.Star) });
-                        rGrid.Children.Add(CreateButton(key, iKey));
+
+                        var button = CreateButton(key, iKey);
+
+                        ((MainWindow)uiWindow).RefreshButton += button.RefreshButton;
+
+                        rGrid.Children.Add(button);
                         iKey++;
                     }//for
                     iRow++;
@@ -167,6 +172,7 @@ namespace OpenKeyboard
             Grid.SetColumn(btn, col);
             btn.FontFamily = mIconFont;
             btn.Title = title;
+
             if (!string.IsNullOrEmpty(fsize))
                 btn.FontSize = double.Parse(fsize);
             else
