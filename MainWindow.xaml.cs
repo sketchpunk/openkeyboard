@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Reflection;
 using System.Windows.Interop;
-using System.Runtime.InteropServices;
 
 #region Notes
 //http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx
@@ -19,7 +19,7 @@ namespace OpenKeyboard
     public partial class MainWindow : Window
     {
         private WindowController mWinController = null;
-        private ContextMenu mAppMenu = new ContextMenu();
+        private ContextMenu mAppMenu;
 
         public MainWindow() { InitializeComponent(); }
 
@@ -50,17 +50,23 @@ namespace OpenKeyboard
 
             //Check which keyboard profile to load in.
             string[] args = Environment.GetCommandLineArgs();
-            string layoutName = (args.Length > 1) ? layoutName = args[1] : "Default";
+            string layoutName = (args.Length > 1) ? args[1] : "Default";
 
             if (!vLayout.Load(layoutName, mainContainer, this))
             {
                 MessageBox.Show("Error loading layout:" + layoutName);
-                this.Close();
+                Close();
                 return;
             }//if
 
-            CreateContextMenu();
-            LoadLayoutList();
+            if (Properties.Settings.Default.ContextMenu)
+            {
+                mAppMenu = new ContextMenu();
+
+                CreateContextMenu();
+
+                LoadLayoutList();
+            }
         }//func
 
         bool inDrag = false;
@@ -79,8 +85,8 @@ namespace OpenKeyboard
             if (inDrag)
             {
                 Point currentPoint = PointToScreen(e.GetPosition(this));
-                this.Left = this.Left + currentPoint.X - anchorPoint.X;
-                this.Top = this.Top + currentPoint.Y - anchorPoint.Y;
+                Left = Left + currentPoint.X - anchorPoint.X;
+                Top = Top + currentPoint.Y - anchorPoint.Y;
                 anchorPoint = currentPoint;
             }
         }
@@ -98,7 +104,9 @@ namespace OpenKeyboard
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseRightButtonDown(e);
-            mAppMenu.IsOpen = true; //Show context menu if user right clicks anywhere in the window.
+
+            if (mAppMenu != null)
+                mAppMenu.IsOpen = true; //Show context menu if user right clicks anywhere in the window.
         }//func
 
         /*
@@ -117,7 +125,7 @@ namespace OpenKeyboard
         private void OpacityMenu_Click(object sender, RoutedEventArgs e)
         {
             double tag = double.Parse((sender as MenuItem).Tag.ToString());
-            this.Opacity = (tag / 100);
+            Opacity = tag / 100;
         }//func
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -126,7 +134,7 @@ namespace OpenKeyboard
 
             switch (tag)
             {
-                case "{CMD_EXIT}": this.Close(); return;
+                case "{CMD_EXIT}": Close(); return;
                 default:
                     vLayout.Load(tag, mainContainer, this);
                     break;
